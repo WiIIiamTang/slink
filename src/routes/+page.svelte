@@ -7,10 +7,10 @@
 	$: ({ shortlinks } = data);
 </script>
 
-<h1>Welcome to SvelteKit</h1>
+<h1>Shortlink</h1>
 
 <form action="?/createShortLink" method="POST" use:enhance>
-	<h3>New shortlink</h3>
+	<h2>New shortlink:</h2>
 	<input type="text" name="url" placeholder="URL" />
 	<button type="submit">Create</button>
 
@@ -22,7 +22,7 @@
 </form>
 
 <div>
-	<h2>Current shortlinks</h2>
+	<h2>Current shortlinks:</h2>
 	{#each shortlinks as shortlink}
 		<p>{shortlink.shortUrl} {shortlink.createdAt} {shortlink.visits} {shortlink.original}</p>
 	{/each}
