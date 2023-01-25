@@ -1,5 +1,7 @@
 <script lang="ts">
+	import '../app.css';
 	import { page } from '$app/stores';
+	import FleetWidget from '$lib/Fleet/FleetWidget.svelte';
 
 	$: userData = $page.data.session?.user as UserData;
 	// $: console.log($page.data.fleet);
@@ -30,6 +32,14 @@
 				<!-- <li class="navItem"><a href="/">Home</a></li> -->
 			</ul>
 		</nav>
+		{#if $page.data.fleet?.connected}
+			<FleetWidget
+				discordAccountId={userData?.id}
+				connected={$page.data.fleet?.connected}
+				username={$page.data.session?.user?.name}
+				version={$page.data.fleet?.version}
+			/>
+		{/if}
 	</header>
 	<slot />
 </div>

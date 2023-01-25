@@ -1,6 +1,7 @@
 import { SvelteKitAuth } from '@auth/sveltekit';
 import { sequence } from '@sveltejs/kit/hooks';
 import Discord from '@auth/core/providers/discord';
+import { connectUsertoService, getApiVersion, getUserDirectives } from '$lib/server/fleet';
 
 import { DISCORD_CLIENT_ID, DISCORD_CLIENT_SECRET } from '$env/static/private';
 
@@ -28,11 +29,20 @@ const authjsAuth = SvelteKitAuth({
 async function fleetAuth({ event, resolve }) {
 	const { locals } = event;
 	const session = await locals.getSession();
-	// TODO: authenticate with fleet
-	// posted connection to service + retrieve directive
-	locals.fleet = {
-		connected: false
-	};
+	if (session) {
+		locals.fleet = {
+			connected: await connectUsertoService(session.user.id, session.user.name),
+			version: await getApiVersion(),
+			directives: await getUserDirectives(session.user.id)
+		};
+	} else {
+		locals.fleet = {
+			connected: false,
+			version: '',
+			directives: []
+		};
+	}
+
 	return resolve(event); //
 }
 
