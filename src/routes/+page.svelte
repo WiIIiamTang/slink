@@ -1,10 +1,18 @@
 <script lang="ts">
 	import type { ActionData, PageData } from './$types';
 	import { enhance } from '$app/forms';
+	import type { ShortenedUrl } from '@prisma/client';
 	export let form: ActionData;
 	export let data: PageData;
+	let shortlinks: ShortenedUrl[];
 
-	$: ({ shortlinks } = data);
+	$: {
+		shortlinks = data.shortlinks;
+		// sort by most recent date
+		shortlinks = shortlinks.sort((a, b) => {
+			return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime();
+		});
+	}
 </script>
 
 <h1 class="my-4 font-bold uppercase text-3xl">Shortlink</h1>
@@ -58,8 +66,17 @@
 					</div>
 				</div>
 
-				<div class="border-t-2 border-t-zinc-500 w-full text-center">
-					Visits: {shortlink.visits}
+				<div
+					class="border-t-2 border-t-zinc-500 w-full text-center flex flex-row justify-center gap-2"
+				>
+					<div>
+						<span class="font-bold text-md">Visits:</span>
+						{shortlink.visits}
+					</div>
+					<div>
+						<span class="font-bold text-md">Created at:</span>
+						{new Date(shortlink.createdAt).toLocaleString()}
+					</div>
 				</div>
 
 				<div>
