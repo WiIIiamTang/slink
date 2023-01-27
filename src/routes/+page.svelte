@@ -67,7 +67,7 @@
 				</div>
 
 				<div
-					class="border-t-2 border-t-zinc-500 w-full text-center flex flex-row justify-center gap-2"
+					class="border-t-2 border-t-zinc-500 w-full text-center flex flex-col items-center justify-center gap-2"
 				>
 					<div>
 						<span class="font-bold text-md">Visits:</span>
