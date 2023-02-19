@@ -16,6 +16,7 @@
 </script>
 
 <h1 class="my-4 font-bold uppercase text-3xl">Shortlink</h1>
+<p>Want access to shortlink? Contact an admin with the account you're using</p>
 
 <form action="?/createShortLink" method="POST" use:enhance>
 	<h2 class="text-xl font-semibold">New shortlink:</h2>
